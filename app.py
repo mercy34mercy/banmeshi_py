@@ -10,11 +10,7 @@ def index():
 @app.route('/hello')
 def indexs():
     return 'hello'
-@app.route('/hello')
-def indexs():
-    return 'hello'
 
-
-
+#helloooooooooo
 if __name__ == '__main__':
     app.run()
