@@ -29,7 +29,7 @@ def init():
         return "error"
     return "success"
 
-
+#カテゴリにリクエストして、レシピをDBに保存
 @app.route('/requestrakuten')
 def requestrakuten():
     try:
@@ -44,7 +44,7 @@ def requestrakuten():
         return e
     return "sucess"
 
-
+#DBから出力
 @app.route('/getall')
 def get_all():
     data = get_db()
