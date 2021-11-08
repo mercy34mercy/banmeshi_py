@@ -83,7 +83,7 @@ def get_all():
 @app.route('/getall_recipe')
 def get_all_recipe():
     data = get_db_recipe()
-    return make_html(data)
+    return data
 
 
 # helloooooooooo

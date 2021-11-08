@@ -63,8 +63,12 @@ def add_recipe(jsondata):
     
     for size in range(len( jsondata["result"])):
         data = jsondata["result"][size]
+        text
+        for l in  range(len(data)):
+            text += l
+            
         try:
-            cur.execute('insert into RECIPE(foodImageUrl,mediumImageUrl,recipeCost,recipeId,recipeMaterial,recipeTitle,recipeUrl,smallImageUrl) values (?,?,?,?,?,?,?,?);', (data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],data["recipeId"],data["recipeMaterial"],data["recipeTitle"],data["recipeUrl"],data["smallImageUrl"]))
+            cur.execute('insert into RECIPE(foodImageUrl,mediumImageUrl,recipeCost,recipeId,recipeMaterial,recipeTitle,recipeUrl,smallImageUrl) values (?,?,?,?,?,?,?,?);', (data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],data["recipeId"],text,data["recipeTitle"],data["recipeUrl"],data["smallImageUrl"]))
         except:
             try:
                 cur.execute('update RECIPE set foodImageUrl=? ,mediumImageUrl=? ,recipeCost=? ,recipeMaterial=? ,recipeTitle=? ,recipeUrl=? ,smallImageUrl=?  where recipeId = ?',(data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],data["recipeMaterial"],data["recipeTitle"],data["recipeUrl"],data["smallImageUrl"],data["recipeId"]))
