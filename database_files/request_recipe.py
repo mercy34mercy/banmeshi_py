@@ -22,13 +22,14 @@ def get_recipes():
   #[0]が商品画像
   for size in range(len( jsondata["result"])):
     for l in jsondata["result"][size]:
-      if l == "foodImageUrl" or l == "recipeCost"  or l == "recipeTitle" or l == "recipeUrl":
+      if l == "foodImageUrl" or l == "recipeCost"  or l == "recipeTitle" or l == "recipeId":
         print(l,jsondata["result"][size][l])
       elif l == "recipeMaterial":
-        for k in range(len(jsondata["result"][size][l])):
-          print(jsondata["result"][size][l][k])
+         print(jsondata["result"][size][l])
+        #  for k in range(len(jsondata["result"][size][l])):
+          # print(jsondata["result"][size][l][k])
   
-  return responses
+  return jsondata
  
 
-get_datas()
+get_recipes()
