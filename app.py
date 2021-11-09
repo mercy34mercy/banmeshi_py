@@ -90,3 +90,5 @@ def get_all_recipe():
 if __name__ == '__main__':
     
     app.run()
+    
+

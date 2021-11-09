@@ -26,8 +26,8 @@ def get_recipes():
   #       print(l,jsondata["result"][size][l])
   #     elif l == "recipeMaterial":
   #        print(jsondata["result"][size][l])
-        #  for k in range(len(jsondata["result"][size][l])):
-          # print(jsondata["result"][size][l][k])
+  #        for k in range(len(jsondata["result"][size][l])):
+  #         print(jsondata["result"][size][l][k])
   
   return jsondata
  
