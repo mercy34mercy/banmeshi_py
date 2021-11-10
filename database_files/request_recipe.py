@@ -7,13 +7,16 @@ def get_recipes():
 
   params = {
       "format": "json",
-      "applicationId": "1093061721945645180",
+      "applicationId": "1049614814076089333",
       "categoryId":"10",
   }
   
 
   responses = requests.get(url, params=params)
   jsondata = responses.json()
+  
+  
+  print(jsondata)
   
 
   
