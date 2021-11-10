@@ -1,5 +1,7 @@
 import requests
 import json
+
+
 def get_recipes():
   
   url = "https://app.rakuten.co.jp/services/api/Recipe/CategoryRanking/20170426"
@@ -14,6 +16,7 @@ def get_recipes():
 
   responses = requests.get(url, params=params)
   jsondata = responses.json()
+  #jsondata = json.loads(responses)
   
   
   print(jsondata)
@@ -35,4 +38,5 @@ def get_recipes():
   return jsondata
  
 
-get_recipes()
+
+a = get_recipes()
