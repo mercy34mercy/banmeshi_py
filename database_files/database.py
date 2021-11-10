@@ -73,8 +73,7 @@ def add_recipe(jsondata):
         data = jsondata["result"][size]
         if(data == "recipeMaterial"):
             for l in  range(len(data)):
-                text += data["recipeMaterial"][l].text + ','
-                
+                text += data["recipeMaterial"][l].text
         print(text)
     
     
@@ -146,7 +145,7 @@ def get_db():
     data = []
     con = sqlite3.connect(db_path)  # データベースに接続
     cur = con.cursor()				# カーソルを取得
-    cur.execute('SELECT categoryName FROM BANMESHI')
+    cur.execute('SELECT parentCategoryId ,categoryId FROM BANMESHI')
     datas=cur.fetchall()
     for data in datas:
         print(data)
@@ -164,7 +163,7 @@ def get_db_recipe():
     data  = []
     con = sqlite3.connect(db_path_recipe)  # データベースに接続
     cur = con.cursor()				# カーソルを取得
-    cur.execute('SELECT * FROM RECIPE')
+    cur.execute('SELECT foodImageUrl FROM RECIPE')
     datas=cur.fetchall()
     for data in datas:
         print(data)
