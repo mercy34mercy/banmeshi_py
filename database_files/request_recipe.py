@@ -1,42 +1,42 @@
 import requests
-import json
 
+from request_rakuten import get_datas
 
 def get_recipes():
   
   url = "https://app.rakuten.co.jp/services/api/Recipe/CategoryRanking/20170426"
-   
-
-  params = {
+  
+  # カテゴリーAPIからjsonでデータを取得
+  categorys  = get_datas()
+  
+  for category in categorys:
+      params = {
       "format": "json",
       "applicationId": "1049614814076089333",
-      "categoryId":"10",
+      "categoryId":category,
   }
-  
-
+    
   responses = requests.get(url, params=params)
-  jsondata = responses.json()
-  #jsondata = json.loads(responses)
+  jsondata = responses.json()  
   
-  
-  print(jsondata)
-  
+  jsonify = ({
+        "data":[]
+        })
+  try:
+    for data in jsondata["result"]:
+      jsonify["data"].append(data)
+  except:
+    print("エラー")
 
-  
-  
-  
-  #[0]が商品画像
-  # for size in range(len( jsondata["result"])):
-  #   for l in jsondata["result"][size]:
-  #     if l == "foodImageUrl" or l == "recipeCost"  or l == "recipeTitle" or l == "recipeId":
-  #       print(l,jsondata["result"][size][l])
-  #     elif l == "recipeMaterial":
-  #        print(jsondata["result"][size][l])
-  #        for k in range(len(jsondata["result"][size][l])):
-  #         print(jsondata["result"][size][l][k])
+
+    
+    
+      
+
   
   return jsondata
  
 
 
-a = get_recipes()
+# a = get_recipes()
+# print(a)

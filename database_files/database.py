@@ -65,9 +65,6 @@ def add_recipe(jsondata):
     # print(jsondata)
     
     text = ""
-    
-
-
 
     for size in range(len( jsondata["result"])):
         data = jsondata["result"][size]
@@ -75,14 +72,7 @@ def add_recipe(jsondata):
         for l in  range(len(data["recipeMaterial"])):
             text += data["recipeMaterial"][l]
         print(text)
-        
         # print(data["recipeMaterial"])
-    
-    
-            
-
-            
-            
         try:
             cur.execute('insert into RECIPE(foodImageUrl,mediumImageUrl,recipeCost,recipeId,recipeMaterial,recipeTitle,recipeUrl,smallImageUrl) values (?,?,?,?,?,?,?,?);', (data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],data["recipeId"],data["recipeMaterial"],text,data["recipeUrl"],data["smallImageUrl"]))
         except:
