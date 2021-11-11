@@ -62,7 +62,7 @@ def initialize_recipe_db():
 def add_recipe(jsondata):
     con = sqlite3.connect(db_path_recipe)
     cur = con.cursor()
-    print(jsondata)
+    # print(jsondata)
     
     text = ""
     
@@ -82,10 +82,10 @@ def add_recipe(jsondata):
             
             
     try:
-        cur.execute('insert into RECIPE(foodImageUrl,mediumImageUrl,recipeCost,recipeId,recipeMaterial,recipeTitle,recipeUrl,smallImageUrl) values (?,?,?,?,?,?,?,?);', (data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],data["recipeId"],text,data["recipeTitle"],data["recipeUrl"],data["smallImageUrl"]))
+        cur.execute('insert into RECIPE(foodImageUrl,mediumImageUrl,recipeCost,recipeId,recipeMaterial,recipeTitle,recipeUrl,smallImageUrl) values (?,?,?,?,?,?,?,?);', (data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],data["recipeId"],data["recipeMaterial"],data["recipeTitle"],data["recipeUrl"],data["smallImageUrl"]))
     except:
         try:
-            cur.execute('update RECIPE set foodImageUrl=? ,mediumImageUrl=? ,recipeCost=? ,recipeMaterial=? ,recipeTitle=? ,recipeUrl=? ,smallImageUrl=?  where recipeId = ?',(data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],text,data["recipeTitle"],data["recipeUrl"],data["smallImageUrl"],data["recipeId"]))
+            cur.execute('update RECIPE set foodImageUrl=? ,mediumImageUrl=? ,recipeCost=? ,recipeMaterial=? ,recipeTitle=? ,recipeUrl=? ,smallImageUrl=?  where recipeId = ?',(data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],data["recipeMaterial"],data["recipeTitle"],data["recipeUrl"],data["smallImageUrl"],data["recipeId"]))
         except Exception as e:
             print('=== エラー内容 ===')
             print('type:' + str(type(e)))

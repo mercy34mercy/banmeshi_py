@@ -10,7 +10,7 @@ def get_recipes():
   params = {
       "format": "json",
       "applicationId": "1049614814076089333",
-      "categoryId":"41-532-1761",
+      "categoryId":"41",
   }
   
 
