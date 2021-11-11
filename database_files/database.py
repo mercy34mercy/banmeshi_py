@@ -150,9 +150,26 @@ def get_db():
     cur = con.cursor()				# カーソルを取得
     cur.execute('SELECT categoryId FROM BANMESHI')
     datas=cur.fetchall()
-    i = 0
+    
+    
+    
+    jsonify = ({
+        "data":[]
+        })
+
     for data in datas:
-        ids[i] = data
+        categorys = str(data) 
+        category = categorys.split("/")
+        for i in category:
+            if i >= "0" and i <= "9":
+                print(i)
+                add_data={
+                    "categoy":str(i)
+                }
+        
+        
+      
+        jsonify["data"].append(add_data)
         
     # try:
     #      for row in cur.execute('SELECT * FROM BANMESHI'):
@@ -161,10 +178,7 @@ def get_db():
     # except sqlite3.Error as e:		# エラー処理
     #     print("Error occurred:", e.args[0])
     #     return e
-    
-    touple =  tuple(iter(ids)) 
-    print(data)
-    return str(data)
+    return jsonify
 
 
 def get_db_recipe():
