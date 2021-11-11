@@ -49,7 +49,7 @@ def initialize_recipe_db():
                 (foodImageUrl text,
                 mediumImageUrl text,
                 recipeCost text,
-                recipeId text,
+                recipeId text UNIQUE,
                 recipeMaterial text,
                 recipeTitle text,
                 recipeUrl text,
@@ -71,29 +71,31 @@ def add_recipe(jsondata):
 
     for size in range(len( jsondata["result"])):
         data = jsondata["result"][size]
-        if(data == "recipeMaterial"):
-            for l in  range(len(data)):
-                text += data["recipeMaterial"][l].text
+        text = ""
+        for l in  range(len(data["recipeMaterial"])):
+            text += data["recipeMaterial"][l]
         print(text)
+        
+        # print(data["recipeMaterial"])
     
     
             
-       
+
             
             
-    try:
-        cur.execute('insert into RECIPE(foodImageUrl,mediumImageUrl,recipeCost,recipeId,recipeMaterial,recipeTitle,recipeUrl,smallImageUrl) values (?,?,?,?,?,?,?,?);', (data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],data["recipeId"],data["recipeMaterial"],data["recipeTitle"],data["recipeUrl"],data["smallImageUrl"]))
-    except:
         try:
-            cur.execute('update RECIPE set foodImageUrl=? ,mediumImageUrl=? ,recipeCost=? ,recipeMaterial=? ,recipeTitle=? ,recipeUrl=? ,smallImageUrl=?  where recipeId = ?',(data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],data["recipeMaterial"],data["recipeTitle"],data["recipeUrl"],data["smallImageUrl"],data["recipeId"]))
-        except Exception as e:
-            print('=== エラー内容 ===')
-            print('type:' + str(type(e)))
-            print('args:' + str(e.args))
-            print('message:' + e.message)
-            print('error:' + str(e))
-            return e
-          
+            cur.execute('insert into RECIPE(foodImageUrl,mediumImageUrl,recipeCost,recipeId,recipeMaterial,recipeTitle,recipeUrl,smallImageUrl) values (?,?,?,?,?,?,?,?);', (data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],data["recipeId"],data["recipeMaterial"],text,data["recipeUrl"],data["smallImageUrl"]))
+        except:
+            try:
+                cur.execute('update RECIPE set foodImageUrl=? ,mediumImageUrl=? ,recipeCost=? ,recipeMaterial=? ,recipeTitle=? ,recipeUrl=? ,smallImageUrl=?  where recipeId = ?',(data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],text,data["recipeTitle"],data["recipeUrl"],data["smallImageUrl"],data["recipeId"]))
+            except Exception as e:
+                print('=== エラー内容 ===')
+                print('type:' + str(type(e)))
+                print('args:' + str(e.args))
+                print('message:' + e.message)
+                print('error:' + str(e))
+                return e
+            
                         
     con.commit()					# データベース更新の確定
     con.close()						# データベースを閉じる
@@ -143,12 +145,15 @@ def add_db(responses):
 
 def get_db():
     data = []
+    ids = list(range(100))
     con = sqlite3.connect(db_path)  # データベースに接続
     cur = con.cursor()				# カーソルを取得
-    cur.execute('SELECT parentCategoryId ,categoryId FROM BANMESHI')
+    cur.execute('SELECT categoryId FROM BANMESHI')
     datas=cur.fetchall()
+    i = 0
     for data in datas:
-        print(data)
+        ids[i] = data
+        
     # try:
     #      for row in cur.execute('SELECT * FROM BANMESHI'):
     #         print(row)
@@ -156,18 +161,32 @@ def get_db():
     # except sqlite3.Error as e:		# エラー処理
     #     print("Error occurred:", e.args[0])
     #     return e
-    return data
+    
+    touple =  tuple(iter(ids)) 
+    print(data)
+    return str(data)
 
 
 def get_db_recipe():
     data  = []
     con = sqlite3.connect(db_path_recipe)  # データベースに接続
     cur = con.cursor()				# カーソルを取得
-    cur.execute('SELECT recipeMaterial FROM RECIPE')
+    cur.execute('SELECT recipeMaterial  FROM RECIPE')
     datas=cur.fetchall()
     for data in datas:
         print(data)
     return data
+
+def get_db_recipe_one():
+    data  = []
+    con = sqlite3.connect(db_path_recipe)  # データベースに接続
+    cur = con.cursor()				# カーソルを取得
+    cur.execute('SELECT foodImageUrl FROM RECIPE where recipeMaterial like "%豚%"')
+    datas=cur.fetchall()
+    for data in datas:
+        print(data)
+    return data
+
 
 def get_db_one(category):
     con = sqlite3.connect(db_path)  # データベースに接続

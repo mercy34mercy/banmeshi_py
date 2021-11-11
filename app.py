@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import Flask
 from database_files.request_rakuten import get_datas
-from database_files.database import initialize_db, add_db,get_db,get_db_recipe,initialize_recipe_db,add_recipe
+from database_files.database import initialize_db, add_db,get_db,get_db_recipe,initialize_recipe_db,add_recipe,get_db_recipe_one
 from database_files.make_HTML import make_html
 from database_files.request_recipe import get_recipes
 app = Flask(__name__)
@@ -78,13 +78,21 @@ def requestrecipe():
 @app.route('/getall')
 def get_all():
     data = get_db()
-    return make_html(data)
+    # datas = data.split("/")
+    
+    return data
 
 @app.route('/getall_recipe')
 def get_all_recipe():
     data = get_db_recipe()
     print(data)
     return "1"
+
+@app.route('/get_db_recipe_one')
+def get_recipe_one():
+    data = get_db_recipe_one()
+    print(data)
+    return "2"
 
 
 # helloooooooooo
