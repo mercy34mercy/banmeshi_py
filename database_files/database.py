@@ -62,29 +62,30 @@ def initialize_recipe_db():
 def add_recipe(jsondata):
     con = sqlite3.connect(db_path_recipe)
     cur = con.cursor()
-    # print(jsondata)
+    print(jsondata)
+ 
     
     text = ""
 
-    for size in range(len( jsondata["result"])):
-        data = jsondata["result"][size]
-        text = ""
-        for l in  range(len(data["recipeMaterial"])):
-            text += data["recipeMaterial"][l]
-        print(text)
-        # print(data["recipeMaterial"])
-        try:
-            cur.execute('insert into RECIPE(foodImageUrl,mediumImageUrl,recipeCost,recipeId,recipeMaterial,recipeTitle,recipeUrl,smallImageUrl) values (?,?,?,?,?,?,?,?);', (data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],data["recipeId"],data["recipeMaterial"],text,data["recipeUrl"],data["smallImageUrl"]))
-        except:
+    for data in jsondata["data"]:
+            text = ""
+            for l in range(len(data["recipeMaterial"])):
+                text += data["recipeMaterial"][l]
+            print(text)
+            # print(data["recipeMaterial"])
             try:
-                cur.execute('update RECIPE set foodImageUrl=? ,mediumImageUrl=? ,recipeCost=? ,recipeMaterial=? ,recipeTitle=? ,recipeUrl=? ,smallImageUrl=?  where recipeId = ?',(data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],text,data["recipeTitle"],data["recipeUrl"],data["smallImageUrl"],data["recipeId"]))
-            except Exception as e:
-                print('=== エラー内容 ===')
-                print('type:' + str(type(e)))
-                print('args:' + str(e.args))
-                print('message:' + e.message)
-                print('error:' + str(e))
-                return e
+                cur.execute('insert into RECIPE(foodImageUrl,mediumImageUrl,recipeCost,recipeId,recipeMaterial,recipeTitle,recipeUrl,smallImageUrl) values (?,?,?,?,?,?,?,?);', (data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],data["recipeId"],data["recipeTitle"],text,data["recipeUrl"],data["smallImageUrl"]))
+                print("succsess")
+            except:
+                try:
+                    cur.execute('update RECIPE set foodImageUrl=? ,mediumImageUrl=? ,recipeCost=? ,recipeMaterial=? ,recipeTitle=? ,recipeUrl=? ,smallImageUrl=?  where recipeId = ?',(data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],text,data["recipeTitle"],data["recipeUrl"],data["smallImageUrl"],data["recipeId"]))
+                except Exception as e:
+                    print('=== エラー内容 ===')
+                    print('type:' + str(type(e)))
+                    print('args:' + str(e.args))
+                    print('message:' + e.message)
+                    print('error:' + str(e))
+                    return e
             
                         
     con.commit()					# データベース更新の確定
@@ -135,13 +136,10 @@ def add_db(responses):
 
 def get_db():
     data = []
-    ids = list(range(100))
     con = sqlite3.connect(db_path)  # データベースに接続
     cur = con.cursor()				# カーソルを取得
     cur.execute('SELECT categoryId FROM BANMESHI')
     datas=cur.fetchall()
-    
-    
     
     jsonify = ({
         "data":[]

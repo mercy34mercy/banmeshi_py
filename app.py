@@ -2,7 +2,6 @@
 from flask import Flask
 from database_files.request_rakuten import get_datas
 from database_files.database import initialize_db, add_db,get_db,get_db_recipe,initialize_recipe_db,add_recipe,get_db_recipe_one
-from database_files.make_HTML import make_html
 from database_files.request_recipe import get_recipes
 app = Flask(__name__)
 
@@ -98,6 +97,6 @@ def get_recipe_one():
 # helloooooooooo
 if __name__ == '__main__':
     
-    app.run()
+    app.run(host='0.0.0.0',port = 20)
     
 

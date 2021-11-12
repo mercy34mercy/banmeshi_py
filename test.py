@@ -1,19 +1,11 @@
+import requests
+import time
+from database_files.database import add_recipe, get_db
 
-import json
+from database_files.request_rakuten import get_datas
 from database_files.request_recipe import get_recipes
-from database_files.database import initialize_db, add_db,get_db,get_db_recipe,initialize_recipe_db,add_recipe
-
-def test():
-    #datas = get_recipes()
-    datas = open("data.json","r")
-    print(datas)
-    
-    
-
-    data = json.load(datas)
-    add_recipe(data)
-    
-    return data
 
 
-test()
+  
+a = get_recipes()
+add_recipe(a)
