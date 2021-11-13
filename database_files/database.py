@@ -62,7 +62,7 @@ def initialize_recipe_db():
 def add_recipe(jsondata):
     con = sqlite3.connect(db_path_recipe)
     cur = con.cursor()
-    print(jsondata)
+    # print(jsondata)
  
     
     text = ""
@@ -71,7 +71,7 @@ def add_recipe(jsondata):
             text = ""
             for l in range(len(data["recipeMaterial"])):
                 text += data["recipeMaterial"][l]
-            print(text)
+            # print(text)
             # print(data["recipeMaterial"])
             try:
                 cur.execute('insert into RECIPE(foodImageUrl,mediumImageUrl,recipeCost,recipeId,recipeMaterial,recipeTitle,recipeUrl,smallImageUrl) values (?,?,?,?,?,?,?,?);', (data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],data["recipeId"],data["recipeTitle"],text,data["recipeUrl"],data["smallImageUrl"]))
@@ -85,7 +85,7 @@ def add_recipe(jsondata):
                     print('args:' + str(e.args))
                     print('message:' + e.message)
                     print('error:' + str(e))
-                    return e
+                    
             
                         
     con.commit()					# データベース更新の確定
@@ -201,5 +201,14 @@ def get_db_one(category):
 # get_db_one("ケーキ")
 
 
+def get():
+    data = []
+    con = sqlite3.connect(db_path)  # データベースに接続
+    cur = con.cursor()				# カーソルを取得
+    cur.execute('SELECT COUNT(*) FROM BANMESHI')
+    datas=cur.fetchall()
+    print(data)
 
-#add_recipe("jsondata")
+
+
+get()
