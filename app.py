@@ -1,14 +1,26 @@
 # -*- coding: utf-8 -*-
 from flask import Flask
+from flask import request
 from database_files.request_rakuten import get_datas
 from database_files.database import initialize_db, add_db,get_db,get_db_recipe,initialize_recipe_db,add_recipe,get_db_recipe_one
 from database_files.request_recipe import get_recipes
 app = Flask(__name__)
 
-
-@app.route('/')
+@app.route('/',methods=['POST','GET'])
 def index():
-    return 'hello, syunki'
+    print("リクエスト:" , request.json)
+    if request.method == 'POST':
+        top_key = request.json['query'] 
+        num = request.json["num"]
+    elif request.method == 'GET':
+        top_key = "GETです"
+        num = 0
+    
+    print(top_key)
+    print(num)
+    return 'hello, world'
+
+
 
 @app.route('/hello')
 def indexs():
@@ -85,11 +97,18 @@ def get_all_recipe():
     print(data)
     return "1"
 
-@app.route('/get_db_recipe_one')
+
+
+@app.route('/get_db_recipe_one',methods=['POST'])
 def get_recipe_one():
-    data = get_db_recipe_one()
-    print(data)
-    return "2"
+    if request.method == 'POST':
+        data = get_db_recipe_one()
+        print(data)
+    else:
+        return "method POST ONLY"
+
+
+    return data
 
 
 # helloooooooooo

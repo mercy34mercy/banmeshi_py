@@ -179,11 +179,24 @@ def get_db_recipe():
         print(data)
     return data
 
-def get_db_recipe_one():
+# json形式でPOSTされたデータをsqlに直してjsonデータを返却する
+def get_db_recipe_one(jsondata):
+    a = open("POST.json","r")
+    jsondata = json.load(a)
+    
     data  = []
+     
+    # POSTされたjsonを分けて保存する
+    q_data = ""
+    for i in jsondata['data']:
+        
+        
+        q_data+= str(i)
+        q_data.append("AND")
+        
     con = sqlite3.connect(db_path_recipe)  # データベースに接続
     cur = con.cursor()				# カーソルを取得
-    cur.execute('SELECT foodImageUrl FROM RECIPE where recipeMaterial like "%豚%"')
+    cur.execute('SELECT foodImageUrl FROM RECIPE where recipeMaterial like {q_data}')
     datas=cur.fetchall()
     for data in datas:
         print(data)
@@ -211,4 +224,4 @@ def get():
 
 
 
-get()
+get_db_recipe_one("a")
