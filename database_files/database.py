@@ -181,8 +181,8 @@ def get_db_recipe():
 
 # json形式でPOSTされたデータをsqlに直してjsonデータを返却する
 def get_db_recipe_one(jsondata):
-    a = open("POST.json","r")
-    jsondata = json.load(a)
+    # a = open("POST.json","r")
+    # jsondata = json.load(a)
     
     data  = []
      
@@ -242,9 +242,17 @@ def get():
     con = sqlite3.connect(db_path)  # データベースに接続
     cur = con.cursor()				# カーソルを取得
     cur.execute('SELECT COUNT(*) FROM BANMESHI')
-    datas=cur.fetchall()
+    data=cur.fetchall()
+    print(data)
+    
+def get2():
+    data = []
+    con = sqlite3.connect(db_path_recipe)  # データベースに接続
+    cur = con.cursor()				# カーソルを取得
+    cur.execute('SELECT COUNT(*) FROM RECIPE')
+    data=cur.fetchall()
     print(data)
 
 
 
-get_db_recipe_one("a")
+get2()

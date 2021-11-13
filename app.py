@@ -4,7 +4,10 @@ from flask import request
 from database_files.request_rakuten import get_datas
 from database_files.database import initialize_db, add_db,get_db,get_db_recipe,initialize_recipe_db,add_recipe,get_db_recipe_one
 from database_files.request_recipe import get_recipes
+from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/',methods=['POST','GET'])
 def index():
@@ -102,7 +105,7 @@ def get_all_recipe():
 @app.route('/get_db_recipe_one',methods=['POST'])
 def get_recipe_one():
     if request.method == 'POST':
-        data = get_db_recipe_one()
+        data = get_db_recipe_one(request.json)
         print(data)
     else:
         return "method POST ONLY"
