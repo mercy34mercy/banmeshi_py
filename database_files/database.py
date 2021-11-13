@@ -188,19 +188,42 @@ def get_db_recipe_one(jsondata):
      
     # POSTされたjsonを分けて保存する
     q_data = ""
+    
+    l = 0
     for i in jsondata['data']:
         
+        if l!=0:
+             q_data+=("AND")
         
-        q_data+= str(i)
-        q_data.append("AND")
+        q_data+= ' recipeMaterial like \"%' +  i + "%\" "
+        l+=1
+       
+    
+    
+    
         
     con = sqlite3.connect(db_path_recipe)  # データベースに接続
     cur = con.cursor()				# カーソルを取得
-    cur.execute('SELECT foodImageUrl FROM RECIPE where recipeMaterial like {q_data}')
+    cur.execute('SELECT * FROM RECIPE where %s' %q_data)
     datas=cur.fetchall()
-    for data in datas:
-        print(data)
-    return data
+    jsonify = ({
+          "data":[]
+        })
+    for data in datas:       
+        add_data = {
+                "foodImageUrl": data[0],
+                "mediumImageUrl":data[1],
+                "recipeCost":data[2],
+                "recipeId":data[3],
+                "recipeMaterial":data[4],
+                "recipeTitle":data[5],
+                "recipeUrl":data[6],
+                "smallImageUrl":data[7]
+              }
+        jsonify["data"].append(add_data)
+        
+    print(jsonify)
+    return jsonify
 
 
 def get_db_one(category):
