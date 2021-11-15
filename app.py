@@ -113,6 +113,15 @@ def get_recipe_one():
 
     return data
 
+@app.route('/delete')
+def delete():
+    
+
+
+    return data
+
+
+
 
 # helloooooooooo
 if __name__ == '__main__':

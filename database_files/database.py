@@ -66,11 +66,14 @@ def add_recipe(jsondata):
  
     
     text = ""
-
+    i = 0
     for data in jsondata["data"]:
             text = ""
             for l in range(len(data["recipeMaterial"])):
+                if i != 0:
+                    text += ","
                 text += data["recipeMaterial"][l]
+                i+=1
             # print(text)
             # print(data["recipeMaterial"])
             try:
@@ -79,6 +82,7 @@ def add_recipe(jsondata):
             except:
                 try:
                     cur.execute('update RECIPE set foodImageUrl=? ,mediumImageUrl=? ,recipeCost=? ,recipeMaterial=? ,recipeTitle=? ,recipeUrl=? ,smallImageUrl=?  where recipeId = ?',(data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],text,data["recipeTitle"],data["recipeUrl"],data["smallImageUrl"],data["recipeId"]))
+                    
                 except Exception as e:
                     print('=== エラー内容 ===')
                     print('type:' + str(type(e)))
@@ -181,8 +185,8 @@ def get_db_recipe():
 
 # json形式でPOSTされたデータをsqlに直してjsonデータを返却する
 def get_db_recipe_one(jsondata):
-    # a = open("POST.json","r")
-    # jsondata = json.load(a)
+    a = open("POST.json","r")
+    jsondata = json.load(a)
     
     data  = []
      
@@ -209,13 +213,24 @@ def get_db_recipe_one(jsondata):
     jsonify = ({
           "data":[]
         })
-    for data in datas:       
+    
+
+    
+    
+    for data in datas:      
+        materials = data[4].split(',')
+        jsonnify2 =({ "recipeMaterial":[]
+    })
+        for material in materials:
+            if len(str(material))>1:
+                jsonnify2["recipeMaterial"].append(material)
+        
         add_data = {
                 "foodImageUrl": data[0],
                 "mediumImageUrl":data[1],
                 "recipeCost":data[2],
                 "recipeId":data[3],
-                "recipeMaterial":data[4],
+                "recipeMaterial":jsonnify2["recipeMaterial"],
                 "recipeTitle":data[5],
                 "recipeUrl":data[6],
                 "smallImageUrl":data[7]
@@ -230,7 +245,7 @@ def get_db_one(category):
     con = sqlite3.connect(db_path)  # データベースに接続
     cur = con.cursor()				# カーソルを取得
     # cur.execute('SELECT * FROM BANMESHI where "%{}%"'.format(category))
-    result=cur.execute('SELECT * FROM BANMESHI where categoryName = "クリスマスケーキ"')
+    cur.execute('SELECT * FROM BANMESHI where categoryName = "クリスマスケーキ"')
     for row in cur:
         print(row)
 # get_db()
@@ -253,6 +268,21 @@ def get2():
     data=cur.fetchall()
     print(data)
 
+def delete_db():
+    con = sqlite3.connect(db_path_recipe)  # データベースに接続
+    cur = con.cursor()				# カーソルを取得
+    cur.execute('SELECT * FROM RECIPE')
+    datas=cur.fetchall()
+
+    for data in datas:       
+        mate = data[4].split(',')
+        if len(mate)<3:
+            cur.execute('DELETE FROM RECIPE where recipeId = %s'%data[3])
+        else:
+            print("safe")
 
 
-get2()
+            
+
+
+get_db_recipe_one("jsondata")
