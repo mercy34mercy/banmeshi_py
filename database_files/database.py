@@ -282,7 +282,5 @@ def delete_db():
             print("safe")
 
 
-            
-
-
+        
 get_db_recipe_one("jsondata")
