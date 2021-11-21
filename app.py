@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from flask import Flask
 from flask import request
+from flask_cors import CORS
 from database_files.database import get_db_recipe_one
 
-app = Flask(__name__)
 
+app = Flask(__name__)
+CORS(app)
 
 @app.route('/',methods=['POST','GET'])
 def index():
