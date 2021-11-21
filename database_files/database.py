@@ -225,7 +225,7 @@ def get_db_recipe_one(jsondata):
         
         add_data = {
                 "foodImageUrl": data[0],
-                "mediumImageUrl":data[1],
+                "   ":data[1],
                 "recipeCost":data[2],
                 "recipeId":data[3],
                 "recipeMaterial":jsonnify2["recipeMaterial"],
