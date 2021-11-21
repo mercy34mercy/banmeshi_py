@@ -185,8 +185,6 @@ def get_db_recipe():
 
 # json形式でPOSTされたデータをsqlに直してjsonデータを返却する
 def get_db_recipe_one(jsondata):
-    a = open("POST.json","r")
-    jsondata = json.load(a)
     
     data  = []
      
@@ -194,8 +192,8 @@ def get_db_recipe_one(jsondata):
     q_data = ""
     
     l = 0
-    for i in jsondata['data']:
-        
+    for i in jsondata:
+        print(i)
         if l!=0:
              q_data+=("AND")
         
@@ -281,6 +279,3 @@ def delete_db():
         else:
             print("safe")
 
-
-        
-get_db_recipe_one("jsondata")

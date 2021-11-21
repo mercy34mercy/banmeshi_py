@@ -105,7 +105,8 @@ def get_all_recipe():
 @app.route('/get_db_recipe_one',methods=['POST'])
 def get_recipe_one():
     if request.method == 'POST':
-        data = get_db_recipe_one(request.json)
+        print(request.json)
+        data = get_db_recipe_one(request.json["data"])
         print(data)
     else:
         return "method POST ONLY"
@@ -113,19 +114,8 @@ def get_recipe_one():
 
     return data
 
-@app.route('/delete')
-def delete():
-    
-
-
-    return data
 
 
 
 
-# helloooooooooo
-if __name__ == '__main__':
-    
-    app.run()
-    
 

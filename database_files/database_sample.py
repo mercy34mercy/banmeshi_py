@@ -25,5 +25,3 @@ def get_db_one(category):
     cur.execute('SELECT * FROM BANMESHI where categoryName like ?',category)
     for row in cur:
         print(row)
-get_db()
-# get_db_one(("%魚%",))
