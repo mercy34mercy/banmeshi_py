@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import Flask
 from flask import request
-from database_files.request_rakuten import get_datas
-from database_files.database import initialize_db, add_db,get_db,get_db_recipe,initialize_recipe_db,add_recipe,get_db_recipe_one
-from database_files.request_recipe import get_recipes
+from database_files.database import initialize_db,get_db,get_db_recipe,initialize_recipe_db,get_db_recipe_one
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -60,31 +58,31 @@ def init_recipe():
     return "success"
 
 #カテゴリにリクエストして、レシピをDBに保存
-@app.route('/requestrakuten')
-def requestrakuten():
-    try:
-        datas = get_datas()
-        add_db(datas)
-    except Exception as e:
-        print('=== エラー内容 ===')
-        print('type:' + str(type(e)))
-        print('args:' + str(e.args))
-        print('message:' + e.message)
-        print('error:' + str(e))
-        return e
-    return "sucess"
+# @app.route('/requestrakuten')
+# def requestrakuten():
+#     try:
+#         datas = get_datas()
+#         add_db(datas)
+#     except Exception as e:
+#         print('=== エラー内容 ===')
+#         print('type:' + str(type(e)))
+#         print('args:' + str(e.args))
+#         print('message:' + e.message)
+#         print('error:' + str(e))
+#         return e
+#     return "sucess"
 
-@app.route('/requestrecipe')
-def requestrecipe():
-        try:
-            datas = get_recipes()
-        except Exception as e:
-            print('=== エラー内容 ===')
-            print('type:' + str(type(e)))
-            print('args:' + str(e.args))
-            print('message:' + e.message)
-            print('error:' + str(e))
-        return "sucess"
+# @app.route('/requestrecipe')
+# def requestrecipe():
+#         try:
+#             datas = get_recipes()
+#         except Exception as e:
+#             print('=== エラー内容 ===')
+#             print('type:' + str(type(e)))
+#             print('args:' + str(e.args))
+#             print('message:' + e.message)
+#             print('error:' + str(e))
+#         return "sucess"
 
 #DBから出力
 @app.route('/getall')
