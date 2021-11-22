@@ -82,6 +82,7 @@ def index():
 #             print('error:' + str(e))
 #         return "sucess"
 
+
 #DBから出力
 # @app.route('/getall')
 # def get_all():
