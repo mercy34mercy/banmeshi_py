@@ -1,22 +1,17 @@
 import requests
 import time
-from database_files.database import add_recipe, get_db
-
-from database_files.request_rakuten import get_datas
-from database_files.request_recipe import get_recipes
-import sqlite3
+import psycopg2
 import json
 from typing import Text
+		
 
-db_path = "banmeshi.db"			# データベースファイル名を指定
-
-
+DATABASE_URL = 'postgres://aiddbjmxylnjxm:d0d3756986638bd8f399a370d3aace891221c4bffb21c4543c3e65f2d25e7cd0@ec2-54-225-187-177.compute-1.amazonaws.com:5432/der1lubvsuh4mb'# データベースファイル名を指定
   
 def get():
     data = []
-    con = sqlite3.connect(db_path)  # データベースに接続
+    con = psycopg2.connect(DATABASE_URL, sslmode='require')# データベースに接続
     cur = con.cursor()				# カーソルを取得
-    cur.execute('SELECT COUNT(*) FROM BANMESHI')
+    cur.execute('SELECT * FROM BANMESHI')
     datas=cur.fetchall()
     print(datas)
 

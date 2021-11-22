@@ -140,26 +140,26 @@ def add_recipe(jsondata):
 #     con.close()						# データベースを閉じる
 
 
-# def get_db():
-#     data = []
-#     con = sqlite3.connect(db_path)  # データベースに接続
-#     cur = con.cursor()				# カーソルを取得
-#     cur.execute('SELECT categoryId FROM BANMESHI')
-#     datas=cur.fetchall()
+def get_db():
+    data = []
+    con = sqlite3.connect(db_path)  # データベースに接続
+    cur = con.cursor()				# カーソルを取得
+    cur.execute('SELECT categoryId FROM BANMESHI')
+    datas=cur.fetchall()
     
-#     jsonify = ({
-#         "data":[]
-#         })
+    jsonify = ({
+        "data":[]
+        })
 
-#     for data in datas:
-#         categorys = str(data) 
-#         category = categorys.split("/")
-#         for i in category:
-#             if i >= "0" and i <= "9":
-#                 print(i)
-#                 add_data={
-#                     "categoy":str(i)
-#                 }
+    for data in datas:
+        categorys = str(data) 
+        category = categorys.split("/")
+        for i in category:
+            if i >= "0" and i <= "9":
+                print(i)
+                add_data={
+                    "categoy":str(i)
+                }
         
         
       
