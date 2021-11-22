@@ -70,17 +70,17 @@ def index():
 #         return e
 #     return "sucess"
 
-@app.route('/requestrecipe')
-def requestrecipe():
-        try:
-            datas = get_recipes()
-        except Exception as e:
-            print('=== エラー内容 ===')
-            print('type:' + str(type(e)))
-            print('args:' + str(e.args))
-            print('message:' + e.message)
-            print('error:' + str(e))
-        return "sucess"
+# @app.route('/requestrecipe')
+# def requestrecipe():
+#         try:
+#             datas = get_recipes()
+#         except Exception as e:
+#             print('=== エラー内容 ===')
+#             print('type:' + str(type(e)))
+#             print('args:' + str(e.args))
+#             print('message:' + e.message)
+#             print('error:' + str(e))
+#         return "sucess"
 
 #DBから出力
 # @app.route('/getall')
