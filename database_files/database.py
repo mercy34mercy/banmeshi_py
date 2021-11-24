@@ -59,7 +59,27 @@ DATABASE_URL = 'postgres://aiddbjmxylnjxm:d0d3756986638bd8f399a370d3aace891221c4
     
 #     con.commit()					# データベース更新の確定
 #     con.close()						# データベースを閉じる
-    
+
+
+def rename():
+    con = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cur = con.cursor()
+    try:
+        cur.execute('alter table RECIPE rename column "   " to "mediumImageUrl";')
+    except:
+        print("MISS")
+        
+def colume():
+    con = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cur = con.cursor()
+    try:
+        cur.execute("\\ RECIPE")
+    except Exception as e:
+        print('=== エラー内容 ===')
+        print('type:' + str(type(e)))
+        print('args:' + str(e.args))
+        
+        
     
 def add_recipe(jsondata):
     con = psycopg2.connect(DATABASE_URL, sslmode='require')

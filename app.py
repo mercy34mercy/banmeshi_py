@@ -2,7 +2,7 @@
 from flask import Flask
 from flask import request
 from flask_cors import CORS
-from database_files.database import get_db_recipe_one
+from database_files.database import colume, get_db_recipe_one, rename
 
 
 app = Flask(__name__)
@@ -21,6 +21,18 @@ def index():
     print(top_key)
     print(num)
     return 'hello, world'
+
+
+
+@app.route('/rename',methods=['POST','GET'])
+def re():
+    rename()
+    return("renama culume")
+
+@app.route('/co',methods=['POST','GET'])
+def co():
+    colume()
+    return("renama culume")
 
 
 
