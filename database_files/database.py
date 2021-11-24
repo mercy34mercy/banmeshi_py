@@ -2,6 +2,7 @@
 from typing import Text
 from flask import Flask
 import psycopg2
+import sqlite3
 
 db_path = "banmeshi.db"			# データベースファイル名を指定
 db_path_recipe = "recipe.db"
@@ -61,23 +62,7 @@ DATABASE_URL = 'postgres://aiddbjmxylnjxm:d0d3756986638bd8f399a370d3aace891221c4
 #     con.close()						# データベースを閉じる
 
 
-def rename():
-    con = psycopg2.connect(DATABASE_URL, sslmode='require')
-    cur = con.cursor()
-    try:
-        cur.execute('alter table RECIPE rename column "   " to "mediumImageUrl";')
-    except:
-        print("MISS")
-        
-def colume():
-    con = psycopg2.connect(DATABASE_URL, sslmode='require')
-    cur = con.cursor()
-    try:
-        cur.execute("\\ RECIPE")
-    except Exception as e:
-        print('=== エラー内容 ===')
-        print('type:' + str(type(e)))
-        print('args:' + str(e.args))
+
         
         
     
@@ -160,39 +145,39 @@ def add_recipe(jsondata):
 #     con.close()						# データベースを閉じる
 
 
-# def get_db():
-#     data = []
-#     con = sqlite3.connect(db_path)  # データベースに接続
-#     cur = con.cursor()				# カーソルを取得
-#     cur.execute('SELECT categoryId FROM BANMESHI')
-    # datas=cur.fetchall()
+def get_db():
+    data = []
+    con = sqlite3.connect(db_path)  # データベースに接続
+    cur = con.cursor()				# カーソルを取得
+    cur.execute('SELECT categoryId FROM BANMESHI')
+    datas=cur.fetchall()
     
-    # jsonify = ({
-    #     "data":[]
-    #     })
+    jsonify = ({
+        "data":[]
+        })
 
-    # for data in datas:
-    #     categorys = str(data) 
-    #     category = categorys.split("/")
-    #     for i in category:
-    #         if i >= "0" and i <= "9":
-    #             print(i)
-    #             add_data={
-    #                 "categoy":str(i)
-    #             }
+    for data in datas:
+        categorys = str(data) 
+        category = categorys.split("/")
+        for i in category:
+            if i >= "0" and i <= "9":
+                print(i)
+                add_data={
+                    "categoy":str(i)
+                }
         
         
       
-#         jsonify["data"].append(add_data)
+        jsonify["data"].append(add_data)
         
-    # try:
-    #      for row in cur.execute('SELECT * FROM BANMESHI'):
-    #         print(row)
-    #         data.append(row)
-    # except sqlite3.Error as e:		# エラー処理
-    #     print("Error occurred:", e.args[0])
-    #     return e
-    # return jsonify
+    try:
+         for row in cur.execute('SELECT * FROM BANMESHI'):
+            print(row)
+            data.append(row)
+    except sqlite3.Error as e:		# エラー処理
+        print("Error occurred:", e.args[0])
+        return e
+    return jsonify
 
 
 # def get_db_recipe():
@@ -243,7 +228,7 @@ def get_db_recipe_one(jsondata):
         
         add_data = {
                 "foodImageUrl": data[0],
-                "   ":data[1],
+                "mediumImageUrl":data[1],
                 "recipeCost":data[2],
                 "recipeId":data[3],
                 "recipeMaterial":jsonnify2["recipeMaterial"],

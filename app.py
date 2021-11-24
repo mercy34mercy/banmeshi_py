@@ -2,7 +2,8 @@
 from flask import Flask
 from flask import request
 from flask_cors import CORS
-from database_files.database import colume, get_db_recipe_one, rename
+from database_files.database import  add_recipe, get_db, get_db_recipe_one
+from database_files.request_recipe import get_recipes
 
 
 app = Flask(__name__)
@@ -23,16 +24,18 @@ def index():
     return 'hello, world'
 
 
-
-@app.route('/rename',methods=['POST','GET'])
-def re():
-    rename()
-    return("renama culume")
-
-@app.route('/co',methods=['POST','GET'])
-def co():
-    colume()
-    return("renama culume")
+@app.route('/recipeintodb',methods=['POST','GET'])
+def intodb():
+    try:
+        get_recipes()
+    except Exception as e:
+        print('=== エラー内容 ===')
+        print('type:' + str(type(e)))
+        print('args:' + str(e.args))
+        print('message:' + e.message)
+        print('error:' + str(e))
+        return e
+    return "sucess"
 
 
 
@@ -67,7 +70,7 @@ def co():
 #         return "error"
 #     return "success"
 
-#カテゴリにリクエストして、レシピをDBに保存
+# カテゴリにリクエストして、レシピをDBに保存
 # @app.route('/requestrakuten')
 # def requestrakuten():
 #     try:
