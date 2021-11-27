@@ -62,7 +62,10 @@ DATABASE_URL = 'postgres://aiddbjmxylnjxm:d0d3756986638bd8f399a370d3aace891221c4
 #     con.close()						# データベースを閉じる
 
 
-
+def rollback():
+    con = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cur = con.cursor()
+    cur.execute("ROLLBACK;")
         
         
     
@@ -82,11 +85,12 @@ def add_recipe(jsondata):
             # print(text)
             # print(data["recipeMaterial"])
             try:
-                cur.execute('insert into RECIPE(foodImageUrl,mediumImageUrl,recipeCost,recipeId,recipeMaterial,recipeTitle,recipeUrl,smallImageUrl) values (?,?,?,?,?,?,?,?);', (data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],data["recipeId"],data["recipeTitle"],text,data["recipeUrl"],data["smallImageUrl"]))
+                cur.execute('insert into RECIPE foodImageUrl = %s,mediumImageUrl = %s,recipeCost = %s,recipeId = %s,recipeMaterial = %s,recipeTitle = %s,recipeUrl = %s,smallImageUrl= %s;', (data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],data["recipeId"],data["recipeTitle"],text,data["recipeUrl"],data["smallImageUrl"]))
                 print("succsess")
             except:
                 try:
-                    cur.execute('update RECIPE set (foodImageUrl,mediumImageUrl ,recipeCost ,recipeMaterial ,recipeTitle ,recipeUrl ,smallImageUrl) values (?,?,?,?,?,?,?,?) where recipeId = %s;',data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],text,data["recipeTitle"],data["recipeUrl"],data["smallImageUrl"],data["recipeId"]%data["recipeId"])
+                    print("update")
+                    cur.execute('update RECIPE set foodImageUrl = %s,mediumImageUrl = %s ,recipeCost = %s ,recipeMaterial = %s ,recipeTitle = %s ,recipeUrl = %s ,smallImageUrl = %s where recipeId = %s;',(data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],text,data["recipeTitle"],data["recipeUrl"],data["smallImageUrl"],data["recipeId"]))
                     
                 except Exception as e:
                     print('=== エラー内容 ===')
@@ -206,7 +210,7 @@ def get_db_recipe_one(jsondata):
           "data":[]
         })
     
-
+    print(datas)
     
     
     for data in datas:      

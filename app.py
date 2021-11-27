@@ -2,7 +2,7 @@
 from flask import Flask
 from flask import request
 from flask_cors import CORS
-from database_files.database import  get_db_recipe_one
+from database_files.database import  get_db_recipe_one, rollback
 from database_files.request_recipe import get_recipes
 
 
@@ -27,6 +27,11 @@ def index():
 @app.route('/recipeintodb',methods=['POST','GET'])
 def intodb():
     get_recipes()
+    return "sucess"
+
+@app.route('/rollback',methods=['POST','GET'])
+def roll():
+    rollback()
     return "sucess"
 
 

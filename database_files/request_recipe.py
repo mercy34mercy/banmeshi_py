@@ -23,7 +23,7 @@ def get_recipes():
       "applicationId": "1049614814076089333",
       "categoryId":category["categoy"],
       }
-      time.sleep(10)
+      # time.sleep(10)
       
       responses = requests.get(url, params=params)
       jsondata = responses.json()  
@@ -48,7 +48,8 @@ def get_recipes():
               jsonify["data"].append(add_data)
               add_recipe(jsonify)
       except:
-        time.sleep(600)
+        i = 0
+        # time.sleep(10)
               
 
 
