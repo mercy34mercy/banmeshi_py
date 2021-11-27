@@ -2,7 +2,7 @@
 from flask import Flask
 from flask import request
 from flask_cors import CORS
-from database_files.database import  add_recipe, get_db, get_db_recipe_one
+from database_files.database import  get_db_recipe_one
 from database_files.request_recipe import get_recipes
 
 
@@ -26,15 +26,7 @@ def index():
 
 @app.route('/recipeintodb',methods=['POST','GET'])
 def intodb():
-    try:
-        get_recipes()
-    except Exception as e:
-        print('=== エラー内容 ===')
-        print('type:' + str(type(e)))
-        print('args:' + str(e.args))
-        print('message:' + e.message)
-        print('error:' + str(e))
-        return e
+    get_recipes()
     return "sucess"
 
 

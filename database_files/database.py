@@ -70,8 +70,6 @@ def add_recipe(jsondata):
     con = psycopg2.connect(DATABASE_URL, sslmode='require')
     cur = con.cursor()
     # print(jsondata)
- 
-    
     text = ""
     i = 0
     for data in jsondata["data"]:
@@ -88,7 +86,7 @@ def add_recipe(jsondata):
                 print("succsess")
             except:
                 try:
-                    cur.execute('update RECIPE set foodImageUrl=? ,mediumImageUrl=? ,recipeCost=? ,recipeMaterial=? ,recipeTitle=? ,recipeUrl=? ,smallImageUrl=?  where recipeId = ?',(data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],text,data["recipeTitle"],data["recipeUrl"],data["smallImageUrl"],data["recipeId"]))
+                    cur.execute('update RECIPE set (foodImageUrl,mediumImageUrl ,recipeCost ,recipeMaterial ,recipeTitle ,recipeUrl ,smallImageUrl) values (?,?,?,?,?,?,?,?) where recipeId = %s;',data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],text,data["recipeTitle"],data["recipeUrl"],data["smallImageUrl"],data["recipeId"]%data["recipeId"])
                     
                 except Exception as e:
                     print('=== エラー内容 ===')
@@ -169,14 +167,7 @@ def get_db():
         
       
         jsonify["data"].append(add_data)
-        
-    try:
-         for row in cur.execute('SELECT * FROM BANMESHI'):
-            print(row)
-            data.append(row)
-    except sqlite3.Error as e:		# エラー処理
-        print("Error occurred:", e.args[0])
-        return e
+    
     return jsonify
 
 

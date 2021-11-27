@@ -2,7 +2,6 @@ import requests
 import time
 from database_files.database import add_recipe, get_db
 
-from database_files.request_rakuten import get_datas
 
 def get_recipes():
   a = 0  
