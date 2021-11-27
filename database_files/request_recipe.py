@@ -28,8 +28,8 @@ def get_recipes():
   
 
   
-      
-      for data in jsondata["result"]:
+      try:
+        for data in jsondata["result"]:
               jsonify = ({
                 "data":[]
             })
@@ -50,6 +50,8 @@ def get_recipes():
                 add_recipe(jsonify)
               except:
                 i = 0
+      except:
+        time.sleep(300)
     
               
 
