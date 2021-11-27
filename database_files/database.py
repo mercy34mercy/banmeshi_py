@@ -85,19 +85,24 @@ def add_recipe(jsondata):
             # print(text)
             # print(data["recipeMaterial"])
             try:
-                cur.execute('insert into RECIPE foodImageUrl = %s,mediumImageUrl = %s,recipeCost = %s,recipeId = %s,recipeMaterial = %s,recipeTitle = %s,recipeUrl = %s,smallImageUrl= %s;', (data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],data["recipeId"],data["recipeTitle"],text,data["recipeUrl"],data["smallImageUrl"]))
+                cur.execute('insert into BANMESHI (foodImageUrl,mediumImageUrl,recipeCost,recipeId,recipeMaterial,recipeTitle,recipeUrl,smallImageUrl) values(%s,%s,%s,%s,%s,%s,%s,%s)', (data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],data["recipeId"],data["recipeTitle"],text,data["recipeUrl"],data["smallImageUrl"]))
                 print("succsess")
-            except:
-                try:
-                    print("update")
-                    cur.execute('update RECIPE set foodImageUrl = %s,mediumImageUrl = %s ,recipeCost = %s ,recipeMaterial = %s ,recipeTitle = %s ,recipeUrl = %s ,smallImageUrl = %s where recipeId = %s;',(data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],text,data["recipeTitle"],data["recipeUrl"],data["smallImageUrl"],data["recipeId"]))
+            except Exception as e:
+                print('=== エラー内容 ===')
+                print('type:' + str(type(e)))
+                print('args:' + str(e.args))
+                print('message:' + e.message)
+                print('error:' + str(e))
+                # try:
+                    # print("update")
+                    # cur.execute('update RECIPE set foodImageUrl = %s,mediumImageUrl = %s ,recipeCost = %s ,recipeMaterial = %s ,recipeTitle = %s ,recipeUrl = %s ,smallImageUrl = %s where recipeId = %s;',(data["foodImageUrl"],data["mediumImageUrl"],data["recipeCost"],text,data["recipeTitle"],data["recipeUrl"],data["smallImageUrl"],data["recipeId"]))
                     
-                except Exception as e:
-                    print('=== エラー内容 ===')
-                    print('type:' + str(type(e)))
-                    print('args:' + str(e.args))
-                    print('message:' + e.message)
-                    print('error:' + str(e))
+                # except Exception as e:
+                #     print('=== エラー内容 ===')
+                #     print('type:' + str(type(e)))
+                #     print('args:' + str(e.args))
+                #     print('message:' + e.message)
+                #     print('error:' + str(e))
                     
             
                         

@@ -13,9 +13,7 @@ def get_recipes():
 # for category in categorys["data"]:
 #   print(category["categoy"])
 
-  jsonify = ({
-          "data":[]
-        })
+
   
   for category in categorys["data"]:
       params = {
@@ -23,15 +21,18 @@ def get_recipes():
       "applicationId": "1049614814076089333",
       "categoryId":category["categoy"],
       }
-      # time.sleep(10)
+      time.sleep(15)
       
       responses = requests.get(url, params=params)
       jsondata = responses.json()  
   
 
   
-      try:
-        for data in jsondata["result"]:
+      
+      for data in jsondata["result"]:
+              jsonify = ({
+                "data":[]
+            })
               a += 1
               print(a)
               add_data = {
@@ -44,12 +45,12 @@ def get_recipes():
                 "recipeUrl":data["recipeUrl"],
                 "smallImageUrl":data["smallImageUrl"]
               }
-            
               jsonify["data"].append(add_data)
-              add_recipe(jsonify)
-      except:
-        i = 0
-        # time.sleep(10)
+              try:
+                add_recipe(jsonify)
+              except:
+                i = 0
+    
               
 
 
