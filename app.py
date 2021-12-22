@@ -120,7 +120,6 @@ def get_recipe_one():
     else:
         data = random_one()
 
-
     return data
 
 
