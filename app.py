@@ -2,7 +2,7 @@
 from flask import Flask
 from flask import request
 from flask_cors import CORS
-from database_files.database import  get_db_recipe_one, rollback
+from database_files.database import  get_db_recipe_one, random_one, rollback
 from database_files.request_recipe import get_recipes
 
 
@@ -118,7 +118,7 @@ def get_recipe_one():
         data = get_db_recipe_one(request.json["data"])
         print(data)
     else:
-        return "method POST ONLY"
+        data = random_one()
 
 
     return data

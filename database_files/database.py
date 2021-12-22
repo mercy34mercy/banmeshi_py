@@ -66,7 +66,42 @@ def rollback():
     con = psycopg2.connect(DATABASE_URL, sslmode='require')
     cur = con.cursor()
     cur.execute("ROLLBACK;")
+    
+def random_one():
+    con = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cur = con.cursor()
+    cur.execute('SELECT * FROM BANMESHI ORDER BY random() LIMIT 1')
+    datas=cur.fetchall()
+    
+    jsonify = ({
+        "data":[]
+        })
+    for data in datas:      
+        materials = data[4].split(',')
+        jsonnify2 =({ "recipeMaterial":[]
+    })
         
+        for material in materials:
+            if len(str(material))>1:
+                jsonnify2["recipeMaterial"].append(material)
+        
+        add_data = {
+                "foodImageUrl": data[0],
+                "mediumImageUrl":data[1],
+                "recipeCost":data[2],
+                "recipeId":data[3],
+                "recipeMaterial":jsonnify2["recipeMaterial"],
+                "recipeTitle":data[5],
+                "recipeUrl":data[6],
+                "smallImageUrl":data[7]
+              }
+        jsonify["data"].append(add_data)
+    
+    print(jsonify)
+
+    con.commit()					# データベース更新の確定
+    con.close()						# データベースを閉じる
+    return jsonify   
         
     
 def add_recipe(jsondata):
@@ -275,3 +310,4 @@ def delete_db():
         else:
             print("safe")
 
+random_one()
