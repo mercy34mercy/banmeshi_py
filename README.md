@@ -1,19 +1,2 @@
-"# first_app" 
-
-url https://banmeshii.herokuapp.com/get_db_recipe_one
-method post
-
-query　{ "data" : ["鶏肉","コンソメ"] }
-
-response "data":[{
-            "foodImageUrl":,
-            "mediumImageUrl": ,
-            "recipeCost":,
-            "recipeId":,
-            "recipeMaterial": [
-            ],
-            "recipeTitle":,
-            "recipeUrl": ,
-            "smallImageUrl": 
-            },
-          ]
+<h3>ドキュメント</h3>
+https://honorable-parsley-05e.notion.site/260da56f9e734199afe927aa2f5561bb
