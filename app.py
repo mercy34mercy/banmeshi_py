@@ -111,16 +111,21 @@ def roll():
 
 
 
-@app.route('/get_db_recipe_one',methods=['POST','GET'])
+@app.route('/get_recipe',methods=['POST'])
 def get_recipe_one():
     if request.method == 'POST':
         print(request.json)
         data = get_db_recipe_one(request.json["data"])
-        print(data)
-    else:
-        data = random_one()
 
     return data
+
+@app.route('/random_one',methods=['GET'])
+def random():
+    data = random_one()
+
+    return data
+
+
 
 
 
