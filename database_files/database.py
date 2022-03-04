@@ -91,7 +91,7 @@ def random_one():
                 "recipeCost":data[2],
                 "recipeId":data[3],
                 "recipeMaterial":jsonnify2["recipeMaterial"],
-                "threeRecipeMaterial":jsonnify2["recipeMaterial"],
+                "threeRecipeMaterial":jsonnify2["recipeMaterial"][:3],
                 "recipeTitle":data[5],
                 "recipeUrl":data[6],
                 "smallImageUrl":data[7]
