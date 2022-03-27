@@ -2,7 +2,7 @@
 from flask import Flask
 from flask import request
 from flask_cors import CORS
-from database_files.database import  get_db_recipe_one, random_one, rollback
+from database_files.database import  get_db_recipe_one, random_one, random_one_by_mate, rollback
 from database_files.request_recipe import get_recipes
 
 
@@ -122,7 +122,11 @@ def get_recipe_one():
 @app.route('/random_one',methods=['GET'])
 def random():
     data = random_one()
-
+    return data
+    
+@app.route('/random_one_by_mate',methods=['POST'])
+def random_by_recipe():
+    data = random_one_by_mate(request.json)
     return data
 
 

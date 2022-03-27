@@ -102,6 +102,55 @@ def random_one():
 
     con.commit()					# データベース更新の確定
     con.close()						# データベースを閉じる
+    return jsonify  
+ 
+def random_one_by_mate(jsondata):
+    q_data = ""
+    
+    l = 0
+    for i in jsondata["data"]:
+        print(i)
+        if l!=0:
+             q_data+=("AND")
+        
+        q_data+= ' recipeMaterial like \'%' +  i + "%\' "
+        l+=1
+    
+    
+    con = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cur = con.cursor()
+    cur.execute('SELECT * FROM BANMESHI WHERE' +  q_data + 'ORDER BY random() LIMIT 1')
+    datas=cur.fetchall()
+    
+    jsonify = ({
+        "data":[]
+        })
+    for data in datas:      
+        materials = data[4].split(',')
+        jsonnify2 =({ "recipeMaterial":[]
+    })
+        
+        for material in materials:
+            if len(str(material))>1:
+                jsonnify2["recipeMaterial"].append(material)
+        
+        add_data = {
+                "foodImageUrl": data[0],
+                "mediumImageUrl":data[1],
+                "recipeCost":data[2],
+                "recipeId":data[3],
+                "recipeMaterial":jsonnify2["recipeMaterial"],
+                "threeRecipeMaterial":jsonnify2["recipeMaterial"][:3],
+                "recipeTitle":data[5],
+                "recipeUrl":data[6],
+                "smallImageUrl":data[7]
+              }
+        jsonify["data"].append(add_data)
+    
+    print(jsonify)
+
+    con.commit()					# データベース更新の確定
+    con.close()						# データベースを閉じる
     return jsonify   
         
     
